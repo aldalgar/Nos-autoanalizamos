@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(tidyverse)
 library(readr)
+library(lubridate)
 ```
 
 
@@ -21,8 +22,18 @@ datos <- read_delim("NosAutoanalizamos2024 - Hoja1.tsv",
 datos <- datos %>% slice(-66) #se quita la última linea del dataframe
 readr :: guess_encoding("NosAutoanalizamos2024 - Hoja1.tsv") #aplicamos este codigo para saber en qua codificacion se encuentra el dataframe
 str(datos)
+VarFactor <- c('Id','Sex','NW.Hnd','Fold','Clap','Smoke')
+VarNum <- c('Age','Wr.Hnd','Pulse','Exer','Height','ALG','ANM','FP','DCS','MD','HSt','Hwork')
+VarTexto <- c('Comentarios')
+VarFecha <- c('FechaNac(DD-MM-YYY)')
 unique(datos$Sex) #sabemos que datos distintos contiene la columna sex
 datos$Wr.Hnd
 unique(datos$NW.Hnd)
+#vamos a analizar las categorias de las variables de tipo factor
+sapply(datos[,VarFactor],unique)
+#despues corregimos los errores antes de comprobar los outliers.
+datos$Wr.Hnd <- as.numeric(datos$Wr.Hnd) #convertimos los datos de str a enteros
+datos$`FechaNac(DD-MM-YYY)`<- as.Date(datos$`FechaNac(DD-MM-YYY)`) #convertimos los datos a tipo fecha con la libreria lubridate.
+
 ```
 
