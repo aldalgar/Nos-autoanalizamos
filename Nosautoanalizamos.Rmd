@@ -1,0 +1,28 @@
+---
+title: "nos autoanalizamos"
+output: html_document
+date: "2024-05-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(readr)
+```
+
+
+```{r}
+datos <- read_delim("NosAutoanalizamos2024 - Hoja1.tsv", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE, skip = 25) #importamos el fichero con import data set readr
+datos <- datos %>% slice(-66) #se quita la última linea del dataframe
+readr :: guess_encoding("NosAutoanalizamos2024 - Hoja1.tsv") #aplicamos este codigo para saber en qua codificacion se encuentra el dataframe
+str(datos)
+unique(datos$Sex) #sabemos que datos distintos contiene la columna sex
+datos$Wr.Hnd
+unique(datos$NW.Hnd)
+```
+
